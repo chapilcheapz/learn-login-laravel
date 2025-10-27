@@ -5,14 +5,14 @@
             <span class="text">AdminHub</span>
         </a>
         <ul class="side-menu top">
-            <li class="active">
-                <a href="#">
+            <li class="{{ Route::currentRouteName() === 'admin.dashboard' ? 'active' : '' }}">
+                <a href="{{ route('admin.dashboard') }}">
                     <i class='bx bxs-dashboard'></i>
                     <span class="text">Dashboard</span>
                 </a>
             </li>
-            <li>
-                <a href="">
+            <li class="{{ Route::currentRouteName() === 'admin.kyc' ? 'active' : '' }}">
+                <a href="{{ route('admin.kyc') }}">
                     <i class='bx bxs-shopping-bag-alt'></i>
                     <span class="text">KYC verification
                     </span>

@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Client;
+
+use App\Http\Controllers\Controller;
 
 use App\Models\Accounts;
 use Illuminate\Http\Request;
@@ -28,13 +30,16 @@ class LoginController extends Controller
             ->where('role', 2)
             ->first();
 
-            if ($user->role !== 2) {
-             return redirect()->route('home');
-            }
-
+        if ($user->role !== 2) {
+            return redirect()->route('home');
+        }
+        // dd( $user );
 
         if (Hash::check($request->password, $user->password)) {
             Auth::login($user);
+            // dd(Auth::check());
+            return redirect()->route('home');
+        } else {
             return redirect()->route('home.login');
         }
     }

@@ -36,13 +36,9 @@
                                 @endphp
                             </div>
                         </small>
-                        @php
-                            if (Auth::user()->kyc == 'Chưa xác minh' && Auth::user()->kyc == 'Chưa xác minh') {
-                                echo '';
-                            } else {
-                                echo `<a class="{{ Auth::check() ? 'btn btn-info' : 'd-none' }}" href="{{ route('kyc.form') }}">KYC</a>`;
-                            }
-                        @endphp
+                        @if (Auth::check() && Auth::user()->kyc != 'Chờ xác minh' && Auth::user()->kyc != 'Đã xác minh')
+                            <a class="btn btn-info" href="{{ route('kyc.form') }}">KYC</a>
+                        @endif
                     @else
                     @endif
 

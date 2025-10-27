@@ -2,10 +2,14 @@
 
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\KycController;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\LoginController;
-use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\KycAdminController;
+
+
+use App\Http\Controllers\Client\KycController;
+use App\Http\Controllers\Client\LoginController;
+use App\Http\Controllers\Client\RegisterController;
+
 
 Route::get('/', function () {
     return view('themes.home');
@@ -22,7 +26,7 @@ Route::middleware('guest')->prefix('home')->group(function () {
 
 Route::prefix('kyc')->group(function () {
     Route::get('/', function () { return view('themes.kyc.kycform'); })->name('kyc.form');
-    Route::post('verify/{id}', [KycController::class, 'verify'])->name('kyc.submit');
+    Route::post('verify/{id}', [KycController::class, 'verify'])->name('kyc.submit');  
 });
 
 
@@ -32,6 +36,12 @@ Route::prefix('kyc')->group(function () {
 // Admin
 Route::middleware('checkAdmin')->prefix('admin')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('admin.dashboard');
+
+    // Kyc
+    Route::get('/kyc',[KycAdminController::class,'index'])->name('admin.kyc');
+    Route::post('/verify/{id}', [KycAdminController::class, 'verify'])->name('kyc.update');
+
+   
 });
 
 Route::middleware('guest:admin')->prefix('admin')->group(function () {
