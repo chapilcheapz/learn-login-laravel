@@ -20,29 +20,32 @@
                 <div class="block-left">
                     {{ Auth::check() ? 'Đã đăng nhập xin chào' : 'Chưa đăng nhập' }}
                     {{ Auth::user()->firstname ?? 'không tìm thấy thông tin' }}
-                    <small>
-                        <div>
-                            @php
-                                if (Auth::user()->kyc == 'Chưa xác minh') {
-                                    echo '<div class="text-danger">Chưa xác minh</div>';
-                                } elseif (Auth::user()->kyc == 'Chờ xác minh') {
-                                    echo '<div class="text-warning">Chờ xác minh</div>';
-                                } elseif (Auth::user()->kyc == 'Đã xác minh') {
-                                    echo '<div class="text-success">Đã xác minh</div>';
-                                } else {
-                                    echo '';
-                                }
-                            @endphp
+                    @if (Auth::check())
+                        <small>
+                            <div>
+                                @php
+                                    if (Auth::user()->kyc == 'Chưa xác minh') {
+                                        echo '<div class="text-danger">Chưa xác minh</div>';
+                                    } elseif (Auth::user()->kyc == 'Chờ xác minh') {
+                                        echo '<div class="text-warning">Chờ xác minh</div>';
+                                    } elseif (Auth::user()->kyc == 'Đã xác minh') {
+                                        echo '<div class="text-success">Đã xác minh</div>';
+                                    } else {
+                                        echo '';
+                                    }
+                                @endphp
+                            </div>
+                        </small>
+                        @php
+                            if (Auth::user()->kyc == 'Chưa xác minh' && Auth::user()->kyc == 'Chưa xác minh') {
+                                echo '';
+                            } else {
+                                echo `<a class="{{ Auth::check() ? 'btn btn-info' : 'd-none' }}" href="{{ route('kyc.form') }}">KYC</a>`;
+                            }
+                        @endphp
+                    @else
+                    @endif
 
-                        </div>
-                    </small>
-                    @php
-                        if (Auth::user()->kyc == 'Chưa xác minh' && Auth::user()->kyc == 'Chưa xác minh') {
-                            echo "";
-                        } else {
-                            echo `<a class="{{ Auth::check() ? 'btn btn-info' : 'd-none' }}" href="{{ route('kyc.form') }}">KYC</a>`;
-                        }
-                    @endphp
                 </div>
 
                 <div class="block-right">
